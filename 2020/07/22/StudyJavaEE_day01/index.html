@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>学习JavaEE第一天 | CodePanda | 詹诚</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Java">
+    <meta name="description" content="方法方法调用时的内存变化                                                                                             image-20200713100527402">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习JavaEE第一天">
+<meta property="og:url" content="http://yoursite.com/2020/07/22/StudyJavaEE_day01/index.html">
+<meta property="og:site_name" content="CodePanda">
+<meta property="og:description" content="方法方法调用时的内存变化                                                                                             image-20200713100527402">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/ZhanCheng/AppData/Roaming/Typora/typora-user-images/image-20200713100527402.png">
+<meta property="og:image" content="c:/Users/ZhanCheng/AppData/Roaming/Typora/typora-user-images/image-20200713094404635.png">
+<meta property="og:image" content="c:/Users/ZhanCheng/AppData/Roaming/Typora/typora-user-images/image-20200713094417371.png">
+<meta property="og:image" content="c:/Users/ZhanCheng/AppData/Roaming/Typora/typora-user-images/image-20200713094427752.png">
+<meta property="og:image" content="c:/Users/ZhanCheng/Desktop/IMG_2248.JPG">
+<meta property="og:image" content="c:/Users/ZhanCheng/Desktop/IMG_2252.JPG">
+<meta property="og:image" content="c:/Users/ZhanCheng/Desktop/IMG_2262.JPG">
+<meta property="article:published_time" content="2020-07-22T06:17:44.242Z">
+<meta property="article:modified_time" content="2020-07-22T06:17:44.242Z">
+<meta property="article:author" content="CodePanda">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/ZhanCheng/AppData/Roaming/Typora/typora-user-images/image-20200713100527402.png">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/IMG_1343.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">CodePanda</h5>
+          <a href="mailto:765985692@qq.com" title="765985692@qq.com" class="mail">765985692@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Padnda?tab=repositories" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/null" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">学习JavaEE第一天</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">学习JavaEE第一天</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-22T06:17:44.242Z" itemprop="datePublished" class="page-time">
+  2020-07-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法"><span class="post-toc-number">1.</span> <span class="post-toc-text">方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法调用时的内存变化"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">方法调用时的内存变化</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法-1"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法重构"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">方法重构</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#类"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#成员变量和局部变量"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">成员变量和局部变量</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#构造方法"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">构造方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#API"><span class="post-toc-number">2.</span> <span class="post-toc-text">API</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#API的使用方法"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">API的使用方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-导包"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">1.导包</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-创建"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">2.创建</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-使用"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">3.使用</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Scanner类-键盘输入类-使用方法"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Scanner类(键盘输入类)使用方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Random类-获取随机数字类-使用方法"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Random类(获取随机数字类)使用方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#猜数字小游戏案例"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">猜数字小游戏案例</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#猜数字小游戏改良版"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">猜数字小游戏改良版</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ArrayList类"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">ArrayList类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#讲解及示例"><span class="post-toc-number">2.6.1.</span> <span class="post-toc-text">讲解及示例</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#如果希望向集合ArrayList当中存储基本类型数据，必须使用基本类型对应的“包装类”；"><span class="post-toc-number">2.6.1.1.</span> <span class="post-toc-text">如果希望向集合ArrayList当中存储基本类型数据，必须使用基本类型对应的“包装类”；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#包装类对应图"><span class="post-toc-number">2.6.1.2.</span> <span class="post-toc-text">包装类对应图</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#自JDK-1-5开始，支持自动装箱，自动拆箱"><span class="post-toc-number">2.6.1.3.</span> <span class="post-toc-text">自JDK 1.5开始，支持自动装箱，自动拆箱:</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#ArrayList练习"><span class="post-toc-number">2.6.2.</span> <span class="post-toc-text">ArrayList练习</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#字符串"><span class="post-toc-number">2.7.</span> <span class="post-toc-text">字符串</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#特点"><span class="post-toc-number">2.7.1.</span> <span class="post-toc-text">特点</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#字符串常量池"><span class="post-toc-number">2.7.2.</span> <span class="post-toc-text">字符串常量池</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#字符串常量池内存图比较"><span class="post-toc-number">2.7.2.1.</span> <span class="post-toc-text">字符串常量池内存图比较</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#字符串的比较方法"><span class="post-toc-number">2.7.3.</span> <span class="post-toc-text">字符串的比较方法</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#字符串的获取方法"><span class="post-toc-number">2.7.4.</span> <span class="post-toc-text">字符串的获取方法</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#字符串的截取方法"><span class="post-toc-number">2.7.5.</span> <span class="post-toc-text">字符串的截取方法</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#字符串的转换方法"><span class="post-toc-number">2.7.6.</span> <span class="post-toc-text">字符串的转换方法</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#字符串的分割方法"><span class="post-toc-number">2.7.7.</span> <span class="post-toc-text">字符串的分割方法</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#static关键字（静态）"><span class="post-toc-number">3.</span> <span class="post-toc-text">static关键字（静态）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#定义"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用方法："><span class="post-toc-number">3.2.</span> <span class="post-toc-text">使用方法：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注意事项："><span class="post-toc-number">3.3.</span> <span class="post-toc-text">注意事项：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#static内存图"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">static内存图</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#静态代码块"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">静态代码块</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#格式"><span class="post-toc-number">3.5.1.</span> <span class="post-toc-text">格式</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#特点-1"><span class="post-toc-number">3.5.2.</span> <span class="post-toc-text">特点</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Arrays类"><span class="post-toc-number">4.</span> <span class="post-toc-text">Arrays类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#介绍"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">介绍</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Arrays类常用方法"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">Arrays类常用方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Math类"><span class="post-toc-number">5.</span> <span class="post-toc-text">Math类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#定义-1"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Math类的常用方法"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">Math类的常用方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#继承"><span class="post-toc-number">6.</span> <span class="post-toc-text">继承</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#定义-2"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#特点-2"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#格式-1"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">格式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#重写（override"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">重写（override)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#定义-3"><span class="post-toc-number">6.4.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#注意事项"><span class="post-toc-number">6.4.2.</span> <span class="post-toc-text">注意事项</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#1-必须保证父子类之间方法的名称相同，参数列表也相同。"><span class="post-toc-number">6.4.2.1.</span> <span class="post-toc-text">1.必须保证父子类之间方法的名称相同，参数列表也相同。</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-子类方法的返回值必须小于等于父类方法的返回值范围。"><span class="post-toc-number">6.4.2.2.</span> <span class="post-toc-text">2.子类方法的返回值必须小于等于父类方法的返回值范围。</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#3-子类方法的权限必须大于等于父类权限修饰符。"><span class="post-toc-number">6.4.2.3.</span> <span class="post-toc-text">3.子类方法的权限必须大于等于父类权限修饰符。</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#父子类勾走方法的访问特点"><span class="post-toc-number">6.5.</span> <span class="post-toc-text">父子类勾走方法的访问特点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#1-子类构造方法当中有一个默认隐含的”super-”调用，所有一定时先调用父类构造方法后执行子类构造方法。"><span class="post-toc-number">6.5.0.1.</span> <span class="post-toc-text">1.子类构造方法当中有一个默认隐含的”super()”调用，所有一定时先调用父类构造方法后执行子类构造方法。</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-子类构造方法可以通过super关键字来调用父类重载构造。"><span class="post-toc-number">6.5.0.2.</span> <span class="post-toc-text">2.子类构造方法可以通过super关键字来调用父类重载构造。</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#3-super的父类构造调用，必须是子类构造方法的第一个语句，不能一个子类构造方法调用多此super构造。"><span class="post-toc-number">6.5.0.3.</span> <span class="post-toc-text">3.super的父类构造调用，必须是子类构造方法的第一个语句，不能一个子类构造方法调用多此super构造。</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#super关键字的用法"><span class="post-toc-number">6.6.</span> <span class="post-toc-text">super关键字的用法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#1-在子类的成员方法中，访问父类的成员变量；"><span class="post-toc-number">6.6.0.1.</span> <span class="post-toc-text">1.在子类的成员方法中，访问父类的成员变量；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-在子类的成员方法中，访问父类的成员方法；"><span class="post-toc-number">6.6.0.2.</span> <span class="post-toc-text">2.在子类的成员方法中，访问父类的成员方法；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#3-在子类的构造方法中，访问父类的构造方法；"><span class="post-toc-number">6.6.0.3.</span> <span class="post-toc-text">3.在子类的构造方法中，访问父类的构造方法；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#4-在子类的构造方法中，访问父类的成员方法；"><span class="post-toc-number">6.6.0.4.</span> <span class="post-toc-text">4.在子类的构造方法中，访问父类的成员方法；</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#this关键字的用法"><span class="post-toc-number">6.7.</span> <span class="post-toc-text">this关键字的用法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#1-在本类的成员方法中，访问本类的成员变量；"><span class="post-toc-number">6.7.0.1.</span> <span class="post-toc-text">1.在本类的成员方法中，访问本类的成员变量；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-在本类的成员方法中，访问本类的另一个成员方法；"><span class="post-toc-number">6.7.0.2.</span> <span class="post-toc-text">2.在本类的成员方法中，访问本类的另一个成员方法；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#3-在本类的构造方法中，访问本类的另一个构造方法；"><span class="post-toc-number">6.7.0.3.</span> <span class="post-toc-text">3.在本类的构造方法中，访问本类的另一个构造方法；</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#super和this内存示意图"><span class="post-toc-number">6.8.</span> <span class="post-toc-text">super和this内存示意图</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Java继承的三个特性"><span class="post-toc-number">6.9.</span> <span class="post-toc-text">Java继承的三个特性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#1-Java语言是单继承的，不能一个子类有两个父类。"><span class="post-toc-number">6.9.0.1.</span> <span class="post-toc-text">1.Java语言是单继承的，不能一个子类有两个父类。</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-Java语言是可以多级继承的，就是A继承B，B继承C；"><span class="post-toc-number">6.9.0.2.</span> <span class="post-toc-text">2.Java语言是可以多级继承的，就是A继承B，B继承C；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#3-父类是可以被多个子类继承的，就是A继承B，C继承B；"><span class="post-toc-number">6.9.0.3.</span> <span class="post-toc-text">3.父类是可以被多个子类继承的，就是A继承B，C继承B；</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-StudyJavaEE_day01"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">学习JavaEE第一天</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-22 06:17:44" datetime="2020-07-22T06:17:44.242Z"  itemprop="datePublished">2020-07-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><h4 id="方法调用时的内存变化"><a href="#方法调用时的内存变化" class="headerlink" title="方法调用时的内存变化"></a>方法调用时的内存变化</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\ZhanCheng\AppData\Roaming\Typora\typora-user-images\image-20200713100527402.png" alt="image-20200713100527402" title="">
+                </div>
+                <div class="image-caption">image-20200713100527402</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\ZhanCheng\AppData\Roaming\Typora\typora-user-images\image-20200713094404635.png" alt="image-20200713094404635" title="">
+                </div>
+                <div class="image-caption">image-20200713094404635</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\ZhanCheng\AppData\Roaming\Typora\typora-user-images\image-20200713094417371.png" alt="image-20200713094417371" title="">
+                </div>
+                <div class="image-caption">image-20200713094417371</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\ZhanCheng\AppData\Roaming\Typora\typora-user-images\image-20200713094427752.png" alt="image-20200713094427752" title="">
+                </div>
+                <div class="image-caption">image-20200713094427752</div>
+            </figure>
+
+<blockquote>
+<p>所有new出来的对象取得都是地址值，返回的也是地址值；</p>
+</blockquote>
+<blockquote>
+<p>new出来的对象存在堆中；</p>
+</blockquote>
+<blockquote>
+<p>创建出的对象存在栈中；</p>
+</blockquote>
+<blockquote>
+<p>所有方法（包含成员变量，成员方法，主方法）存在方法区；</p>
+</blockquote>
+<h4 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h4><ul>
+<li><p>格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> 数据类型 方法名(参数<span class="number">1</span>，参数<span class="number">2</span>...)&#123;</span><br><span class="line">		方法体;</span><br><span class="line">		<span class="keyword">return</span> 数据类型;(如果方法名前的数据类型是<span class="keyword">void</span>则不需要<span class="keyword">return</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Dome01</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> result = a + b;</span><br><span class="line">    	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法重构"><a href="#方法重构" class="headerlink" title="方法重构"></a>方法重构</h4></li>
+<li><p>格式：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> 数据类型 方法名(参数<span class="number">1</span>，参数<span class="number">2</span>，...)&#123;</span><br><span class="line">		方法体;</span><br><span class="line">		<span class="keyword">return</span> 数据类型;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> 数据类型 方法名(参数<span class="number">3</span>，参数<span class="number">4</span>，...)&#123;</span><br><span class="line">		方法体;</span><br><span class="line">		<span class="keyword">return</span> 数据类型;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> 数据类型 方法名(参数<span class="number">5</span>，参数<span class="number">6</span>，...)&#123;</span><br><span class="line">		方法体;</span><br><span class="line">		<span class="keyword">return</span> 数据类型;</span><br><span class="line">&#125;</span><br><span class="line">注意：<span class="number">1</span>.方法重构跟方法参数的数据类型和排列顺序有关；</span><br><span class="line">     <span class="number">2</span>.方法重构跟方法名前的数据类型无关；</span><br><span class="line">     <span class="number">3</span>.方法重构时方法名要一致；</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>示例<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Dome02</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">      <span class="keyword">int</span> result = a + b;</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Dome02</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">double</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = (<span class="keyword">int</span>)(a + b);</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Dome02</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">long</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = (<span class="keyword">int</span>)(a + b);</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><ul>
+<li><p>格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 类名</span>&#123;</span><br><span class="line">    成员变量；</span><br><span class="line">    成员方法；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome03</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a;		<span class="comment">//成员变量</span></span><br><span class="line">    <span class="keyword">int</span> b;		<span class="comment">//成员变量</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">result</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;		<span class="comment">//成员方法</span></span><br><span class="line">        <span class="keyword">int</span> result = a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>标准类(也叫Java Bean)有四个组成部分：</li>
+</ul>
+<blockquote>
+<p>1.所有的成员变量都要使用private关键字修饰；</p>
+<p>2.为每一个成员变量编写一对Getter/Setter方法；</p>
+<p>3.编写一个无参数的构造方法；</p>
+<p>4.编写一个全参数的构造方法；</p>
+</blockquote>
+<ul>
+<li>标准类可直接写两个成员变量后使用Alt + Insert快捷键来生成构造方法和Getter/Setter方法；</li>
+</ul>
+<h4 id="成员变量和局部变量"><a href="#成员变量和局部变量" class="headerlink" title="成员变量和局部变量"></a>成员变量和局部变量</h4><ul>
+<li>1.定义位置不一样；</li>
+<li>2.作用范围不一样；</li>
+<li>3.默认值不一样；</li>
+<li>4.内存的位置不一样；</li>
+<li>5.生命周期不一样；</li>
+</ul>
+<h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><ul>
+<li>1.构造方法的名称必须和所在的类名称完全一样，就连大小写都一样；</li>
+<li>2.构造方法不用写返回值，连void都不写；</li>
+<li>3.构造方法不能return一个具体的返回值；</li>
+<li>4.如果没有编写任何构造方法，那么编译器将会默认赠送一个构造方法，没有参数、方法体，什么事情都不做；</li>
+<li>5.一但编写了至少一个构造方法，那么编译器将不再赠送； </li>
+</ul>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><blockquote>
+<p>API(Application Programming Interface)，应用程序编程接口；</p>
+</blockquote>
+<h4 id="API的使用方法"><a href="#API的使用方法" class="headerlink" title="API的使用方法"></a>API的使用方法</h4><h5 id="1-导包"><a href="#1-导包" class="headerlink" title="1.导包"></a>1.导包</h5><ul>
+<li>import 包路径.类名称；<br>只有java.lang包下的内容不需要导包，其他的包都需要import语句；</li>
+</ul>
+<h5 id="2-创建"><a href="#2-创建" class="headerlink" title="2.创建"></a>2.创建</h5><ul>
+<li>类名称 对象名 = new 类名();</li>
+</ul>
+<h5 id="3-使用"><a href="#3-使用" class="headerlink" title="3.使用"></a>3.使用</h5><ul>
+<li>对象名.成员方法();</li>
+</ul>
+<h4 id="Scanner类-键盘输入类-使用方法"><a href="#Scanner类-键盘输入类-使用方法" class="headerlink" title="Scanner类(键盘输入类)使用方法"></a>Scanner类(键盘输入类)使用方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01Scanner</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;		</span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);		<span class="comment">//创建Scanner对象</span></span><br><span class="line">        <span class="keyword">int</span> a = sc.nextInt();						<span class="comment">//使用键盘输入数值并赋值给a</span></span><br><span class="line">        System.out.println(a);						<span class="comment">//打印输入的值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Random类-获取随机数字类-使用方法"><a href="#Random类-获取随机数字类-使用方法" class="headerlink" title="Random类(获取随机数字类)使用方法"></a>Random类(获取随机数字类)使用方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Random;						<span class="comment">//导入Random包</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01Random</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Random r = <span class="keyword">new</span> Random();				<span class="comment">//创建Random对象</span></span><br><span class="line">        <span class="keyword">int</span> a = r.nextInt();					<span class="comment">//获取随机数字并复制给a</span></span><br><span class="line">        System.out.println(a);					<span class="comment">//打印获取到的数字</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="猜数字小游戏案例"><a href="#猜数字小游戏案例" class="headerlink" title="猜数字小游戏案例"></a>猜数字小游戏案例</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> Title:这是一个猜数字的小游戏，可连续猜如果猜中就结束！</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> java.util.Random;					<span class="comment">//导入Random包</span></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;					<span class="comment">//导入Scanner包</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">       	Random r = <span class="keyword">new</span> Random();			<span class="comment">//新建Random对象</span></span><br><span class="line">        <span class="keyword">int</span> a = r.nextInt(<span class="number">100</span>)+<span class="number">1</span>;			<span class="comment">//设置[1,100]的随机数并赋值给a</span></span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;						<span class="comment">//循环使用键盘获取数字</span></span><br><span class="line">            Scanner sc = <span class="keyword">new</span> Scanner(System.in);	<span class="comment">//新建Scanner对象</span></span><br><span class="line">            System.out.println(<span class="string">"请输入你猜的数字："</span>);	</span><br><span class="line">            <span class="keyword">int</span> b = sc.nextInt();					<span class="comment">//获取键盘输入的数字并赋值给b</span></span><br><span class="line">            <span class="keyword">if</span>(b&gt;a)&#123;</span><br><span class="line">                System.out.println(<span class="string">"数字猜大了，请重猜！！！"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(b&lt;a)&#123;</span><br><span class="line">                System.out.println(<span class="string">"数字猜小了，请重猜！！！"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"恭喜你猜中了！！！"</span>);</span><br><span class="line">              	<span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"游戏结束！！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="猜数字小游戏改良版"><a href="#猜数字小游戏改良版" class="headerlink" title="猜数字小游戏改良版"></a>猜数字小游戏改良版</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	Title:这是一个猜数字的小游戏，只能猜10次，如果10次未猜中将结束游戏</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> java.util.Random;					<span class="comment">//导入Random包</span></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;					<span class="comment">//导入Scanner包</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome02</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Random r = <span class="keyword">new</span> Randow();			<span class="comment">//新建Random对象</span></span><br><span class="line">        <span class="keyword">int</span> a = r.nextInt(<span class="number">100</span>)+<span class="number">1</span>;			<span class="comment">//设置[1,100]的随机数并赋值给a</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++)&#123;</span><br><span class="line">            Scanner sc = <span class="keyword">new</span> Scanner(System.in);	<span class="comment">//新Scanner对象</span></span><br><span class="line">            System.out.println(<span class="string">"请输入你猜的数字："</span>);</span><br><span class="line">            <span class="keyword">int</span> b = sc.nextInt();					<span class="comment">//获取键盘输入的数字并赋值给b</span></span><br><span class="line">            <span class="keyword">if</span>(b&gt;a)&#123;	</span><br><span class="line">                System.out.println(<span class="string">"数字猜大了，请重猜！！！ 你还有"</span>+(<span class="number">10</span>-i)+<span class="string">"次机会！"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(b&lt;a)&#123;</span><br><span class="line">                System.out.println(<span class="string">"数字猜小了，请重猜！！！ 你还有"</span>+(<span class="number">10</span>-i)+<span class="string">"次机会！"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"恭喜你猜对了！！！"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"游戏结束！！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ArrayList类"><a href="#ArrayList类" class="headerlink" title="ArrayList类"></a>ArrayList类</h4><h5 id="讲解及示例"><a href="#讲解及示例" class="headerlink" title="讲解及示例"></a>讲解及示例</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01ArrayList</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建一个ArrayList集合，集合的名称是list,里面装的全都是String字符串类型的数据</span></span><br><span class="line">        <span class="comment">//备注：从JDK1.7开始，右侧的尖括号内可以不写内容，但是&lt;&gt;本身是要写的</span></span><br><span class="line">        <span class="comment">//注意事项：对于ArrayList集合来说，直接打印得到的不是地址值，而是内容。[]</span></span><br><span class="line">        ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        System.out.println(list);	<span class="comment">//[]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ArrayList当中常用的方法有：</span><br><span class="line">   <span class="number">1</span>. <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span></span>;向集合当中添加元素，参数的类型和泛型一致，返回值代表添加是否成功；</span><br><span class="line">    备注：对于ArrayList集合来说，add添加动作一定是成功的，所有返回值可用可不用；</span><br><span class="line">    但是对于其他集合来说，add添加动作不一定成功；</span><br><span class="line">   <span class="number">2</span>. <span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></span>;从集合当中获取元素，参数是索引编号，返回值是对应位置的元素；</span><br><span class="line">   <span class="number">3</span>. <span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span></span>;从集合当中删除元素，参数是索引编号，返回值是被删除的元素；</span><br><span class="line">   <span class="number">4</span>. <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;获取集合的尺寸长度，返回值是集合中包含的元素个数；</span><br></pre></td></tr></table></figure>
+
+<h6 id="如果希望向集合ArrayList当中存储基本类型数据，必须使用基本类型对应的“包装类”；"><a href="#如果希望向集合ArrayList当中存储基本类型数据，必须使用基本类型对应的“包装类”；" class="headerlink" title="如果希望向集合ArrayList当中存储基本类型数据，必须使用基本类型对应的“包装类”；"></a>如果希望向集合ArrayList当中存储基本类型数据，必须使用基本类型对应的“包装类”；</h6><h6 id="包装类对应图"><a href="#包装类对应图" class="headerlink" title="包装类对应图"></a>包装类对应图</h6><table>
+<thead>
+<tr>
+<th>基本类型</th>
+<th>包装类（引用类型,包装类都在java.lang包下）</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>Byte</td>
+<td></td>
+</tr>
+<tr>
+<td>short</td>
+<td>Short</td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>Integer</td>
+<td>比较特殊</td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+<td></td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+<td></td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+<td></td>
+</tr>
+<tr>
+<td>char</td>
+<td>Character</td>
+<td>比较特殊</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+<td></td>
+</tr>
+</tbody></table>
+<h6 id="自JDK-1-5开始，支持自动装箱，自动拆箱"><a href="#自JDK-1-5开始，支持自动装箱，自动拆箱" class="headerlink" title="自JDK 1.5开始，支持自动装箱，自动拆箱:"></a>自JDK 1.5开始，支持自动装箱，自动拆箱:</h6><blockquote>
+<p>自动装箱：基本类型 –&gt; 包装类型</p>
+</blockquote>
+<blockquote>
+<p>自动拆箱：包装类型 –&gt; 基本类型</p>
+</blockquote>
+<h5 id="ArrayList练习"><a href="#ArrayList练习" class="headerlink" title="ArrayList练习"></a>ArrayList练习</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Title: 生成6个1~33之间的随机整数，添加到集合，并遍历集合；</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01ArrayList</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        ArrayList &lt;Integer&gt; List = <span class="keyword">new</span> ArrayList&lt;&gt;();		<span class="comment">//新建Int基本类型数组List</span></span><br><span class="line">        Random r = <span class="keyword">new</span> Random();							<span class="comment">//获取随机Int类型数字</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">6</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> num = r.nextInt(<span class="number">33</span>)+<span class="number">1</span>;						<span class="comment">//获取Int类型随机数字给num</span></span><br><span class="line">            List.add(num);									<span class="comment">//往List中添加获取到的随机数字</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; List.size();i++)&#123;					<span class="comment">//遍历List数组</span></span><br><span class="line">            System.out.print(List.get(i)+<span class="string">" "</span>);				</span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><h5 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h5><blockquote>
+<p>1.字符串的内容不可变；</p>
+<p>2.正是因为字符串不可改变，所以字符串是可以共享使用的；</p>
+<p>3.字符串效果上相当于是char[]字符数组，但是底层原理是byte[]数组；</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">字符串的创建形式：</span><br><span class="line">    三种构造方法：</span><br><span class="line">    <span class="number">1</span>.<span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">()</span>:表示空字符串，里面没有任何内容；</span></span><br><span class="line"><span class="function">    2.<span class="keyword">public</span> <span class="title">String</span><span class="params">(<span class="keyword">char</span>[])</span>:表示根据字符数组的类容来创建字符串；</span></span><br><span class="line"><span class="function">    3.<span class="keyword">public</span> <span class="title">String</span><span class="params">(<span class="keyword">byte</span>[])</span>:表示根据字节数组的类容来创建字符串；</span></span><br><span class="line"><span class="function">    一种直接创建：</span></span><br><span class="line"><span class="function">    String str </span>= <span class="string">" "</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01String</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        String str1 = <span class="keyword">new</span> String();</span><br><span class="line">        <span class="keyword">char</span>[] charArrayList = &#123;<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>&#125;;</span><br><span class="line">        String str2 = <span class="keyword">new</span> String(charArrayList);</span><br><span class="line">        <span class="keyword">byte</span>[] byteArrayList = &#123;<span class="number">97</span>,<span class="number">98</span>,<span class="number">99</span>&#125;;</span><br><span class="line">        String str3 = <span class="keyword">new</span> String(byteArrayList);</span><br><span class="line">        String str4 = <span class="string">"Hello"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符串常量池"><a href="#字符串常量池" class="headerlink" title="字符串常量池"></a>字符串常量池</h5><blockquote>
+<p>程序当中直接写上的双引号字符串，就在字符串常量池中；</p>
+</blockquote>
+<blockquote>
+<p>对于基本类型来说，==是进行数值比较；</p>
+<p>对于引用类型来说，==是进行地址值比较；</p>
+</blockquote>
+<h6 id="字符串常量池内存图比较"><a href="#字符串常量池内存图比较" class="headerlink" title="字符串常量池内存图比较"></a>字符串常量池内存图比较</h6><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\ZhanCheng\Desktop\IMG_2248.JPG" alt="IMG_2248" title="">
+                </div>
+                <div class="image-caption">IMG_2248</div>
+            </figure>
+
+<h5 id="字符串的比较方法"><a href="#字符串的比较方法" class="headerlink" title="字符串的比较方法"></a>字符串的比较方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*如果确实需要对字符串中的内容进行比较，可以有两种方法：</span></span><br><span class="line"><span class="comment">    1.public boolean equals(Object object):参数可以是任何对象，只有参数是一个字符串并且内容相同才会给true；否则返回false；</span></span><br><span class="line"><span class="comment">注意事项：</span></span><br><span class="line"><span class="comment">    1).任何对象都能用Object进行接收；</span></span><br><span class="line"><span class="comment">    2).equals方法具有对称性，a.equals(b)和b.equals(a)是一样的；</span></span><br><span class="line"><span class="comment">    3).如果比较双方一个常量一个变量，推荐把常量字符写在前面；</span></span><br><span class="line"><span class="comment">    推荐："abc".equals(str)  不推荐：str.equals("abc")</span></span><br><span class="line"><span class="comment">    2.public boolean equalsIgnoreCase(String str):忽略大小写，进行内容比较；</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01Equals</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        String str = <span class="string">"abc"</span>;				<span class="comment">//创建字符串str</span></span><br><span class="line">        <span class="keyword">boolean</span> a = <span class="string">"abc"</span>.equals(str);	<span class="comment">//比较str与"abc"</span></span><br><span class="line">        System.out.println(a);			<span class="comment">//输出比较结果</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符串的获取方法"><a href="#字符串的获取方法" class="headerlink" title="字符串的获取方法"></a>字符串的获取方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">String当中获取相关的常用方法：</span></span><br><span class="line"><span class="comment">    1.public int length():获取字符串当中含有的字符个数，拿到字符串长度；</span></span><br><span class="line"><span class="comment">    2.public String concat(String str)：将当前字符串和参数字符串拼接成为返回值新的字符串；</span></span><br><span class="line"><span class="comment">    3.public char charAt(int index):获取指定索引位置的单个字符。(索引从0开始)</span></span><br><span class="line"><span class="comment">    4.public int indexOf(String str):查找参数字符串在本字符串当中首次出现的索引位置，如果没有返回-1值；</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01String</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        String str = <span class="string">"HelloWorld!"</span>;			<span class="comment">//新建字符串str</span></span><br><span class="line">        <span class="keyword">int</span> length = str.length();			<span class="comment">//获取字符串长度length</span></span><br><span class="line">        System.out.println(<span class="string">"字符串长度："</span>+str);<span class="comment">//11</span></span><br><span class="line">        String concat = str.concat(<span class="string">"java"</span>);	<span class="comment">//在字符串后添加“java”然后赋值给concat</span></span><br><span class="line">        System.out.println(<span class="string">"添加后的字符串："</span>+concat);<span class="comment">//HelloWorld!java</span></span><br><span class="line">        <span class="keyword">char</span> charat = str.charAt(<span class="number">4</span>);		<span class="comment">//查找出字符串4号原素并赋值给charat</span></span><br><span class="line">        System.out.println(<span class="string">"字符串第4号元素是"</span>+charat);<span class="comment">//o</span></span><br><span class="line">        <span class="keyword">int</span> indexof = str.indexOf(<span class="string">"l"</span>);		<span class="comment">//查找l首次出现的位置并将索引赋值给indexof</span></span><br><span class="line">        System.out.println(<span class="string">"字符串中l首次出现在那个位置："</span>+indexof);<span class="comment">//2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符串的截取方法"><a href="#字符串的截取方法" class="headerlink" title="字符串的截取方法"></a>字符串的截取方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">String当中截取相关的常用方法：</span></span><br><span class="line"><span class="comment">    1.public String substring(int index):截取索引从index位置到字符串末尾的字符；</span></span><br><span class="line"><span class="comment">    2.public String substring(int begin, int end):截取索引从begin开始到end结束的字符；</span></span><br><span class="line"><span class="comment">    注意：[begin,end),包含begin但不包含end字符；</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01SubString</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        String str = <span class="string">"Hello World!"</span>;		<span class="comment">//创建字符串str</span></span><br><span class="line">        String sub1 = str.substring(<span class="number">2</span>);		<span class="comment">//从索引2开始到末尾截取字符串赋值给sub1</span></span><br><span class="line">        System.out.println(sub1);			<span class="comment">//llo World!</span></span><br><span class="line">        String sub2 = str.substring(<span class="number">2</span>,<span class="number">8</span>);	<span class="comment">//从索引2开始到索8结束截取字符串赋值给sub2</span></span><br><span class="line">        System.out.println(sub2);			<span class="comment">//llo Wo</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符串的转换方法"><a href="#字符串的转换方法" class="headerlink" title="字符串的转换方法"></a>字符串的转换方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">String当中转换相关的常用方法：</span></span><br><span class="line"><span class="comment">    1.public char[] toCharArray():把当前字符串拆分成为字符数组作为返回值；</span></span><br><span class="line"><span class="comment">    2.public byte[] getBytes();获取当前字符串底层的字节数组；</span></span><br><span class="line"><span class="comment">    3.public String replace(Charsequence oldString, Charsequence newString):将出现的老字符串替换成新字符串，并将新字符串返回；</span></span><br><span class="line"><span class="comment">    注意：Charsequence表示可以接受字符串类型；</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01String</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        String str = <span class="string">"Hello World!"</span>;		<span class="comment">//新建字符串str</span></span><br><span class="line">        <span class="keyword">char</span>[] tochar = str.toCharArray();	<span class="comment">//将str拆分成字符数组赋值给tochar</span></span><br><span class="line">        System.out.println(tochar);			<span class="comment">//Hello World！</span></span><br><span class="line">        <span class="keyword">byte</span>[] getbyte = str.getBytes();	<span class="comment">//将str拆分成字节数组赋值给getbyte</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;getbyte.length;i++)&#123;<span class="comment">//遍历getbyte数组</span></span><br><span class="line">            System.out.print(getbyte[i]);	<span class="comment">//72 101 108 108 111 32 87 111 114 108 100 33</span></span><br><span class="line">        &#125;</span><br><span class="line">        String replace = str.replace(<span class="string">"l"</span>,<span class="string">"o"</span>);<span class="comment">//将str中l替换成o然后赋值给replace</span></span><br><span class="line">        System.out.println(replace);		  <span class="comment">//Heooo Worod!</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符串的分割方法"><a href="#字符串的分割方法" class="headerlink" title="字符串的分割方法"></a>字符串的分割方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">String当中分割相关的常用方法：</span></span><br><span class="line"><span class="comment">    1.public String[] split(String regex):按照参数的规则，将字符串切分成若干部分；</span></span><br><span class="line"><span class="comment">    注意事项：split方法的参数其实是一个“正则表达式”</span></span><br><span class="line"><span class="comment">    如果按照英文句点“.”进行切分，必须写"\\.”;</span></span><br><span class="line"><span class="comment">*/</span>    </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01Split</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        String str = <span class="string">"aaa,bbb,ccc"</span>;			<span class="comment">//创建String字符串str</span></span><br><span class="line">        String[] str2 = str.split(<span class="string">","</span>);		<span class="comment">//按照“，”进行拆分字符串并赋值给str2</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; str2.length;i++)&#123; <span class="comment">//遍历str2中的元素</span></span><br><span class="line">            System.out.print(str2[i]);		<span class="comment">//aaa bbb ccc </span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="static关键字（静态）"><a href="#static关键字（静态）" class="headerlink" title="static关键字（静态）"></a>static关键字（静态）</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p>一但使用static修饰成员方法，那么这就成为了静态方法，静态方法不属于对象，而是属于类；</p>
+</blockquote>
+<h4 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h4><blockquote>
+<p>静态变量：类名称.静态变量;</p>
+<p>静态方法：类名称.静态方法;</p>
+</blockquote>
+<h4 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h4><blockquote>
+<p>如果没有static关键字，那么必须首先创建对象，然后通过对象才能使用它。</p>
+<p>如果有static关键字，那么不需要创建对象，直接通过类名称使用它。</p>
+<p>静态不能直接访问非静态。</p>
+<p>静态方法中不能使用this。（原因：this代表当前对象，通过谁调用的方法，谁就是当前对象）</p>
+</blockquote>
+<h4 id="static内存图"><a href="#static内存图" class="headerlink" title="static内存图"></a>static内存图</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\ZhanCheng\Desktop\IMG_2252.JPG" alt="IMG_2252" title="">
+                </div>
+                <div class="image-caption">IMG_2252</div>
+            </figure>
+
+<h4 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h4><h5 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 类名称</span>&#123;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">        <span class="comment">//静态代码块内容</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h5><blockquote>
+<p>当第一次使用本类时，静态代码块执行唯一的一次；</p>
+<p>静态内容总是优先于非静态，所以静态代码块比构造方法先执行；</p>
+<p>静态代码块用来一次性地静态成员变量进行赋值；</p>
+</blockquote>
+<h3 id="Arrays类"><a href="#Arrays类" class="headerlink" title="Arrays类"></a>Arrays类</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><blockquote>
+<p>java.lang.Arrays是一个与数组相关的工具类，里面提供了大量静态方法，用来实现数组常见的操作；</p>
+</blockquote>
+<h4 id="Arrays类常用方法"><a href="#Arrays类常用方法" class="headerlink" title="Arrays类常用方法"></a>Arrays类常用方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">public static String toString(数组)：将参数数组变成字符串（按照默认格式：[元素1，元素2，元素3...]</span></span><br><span class="line"><span class="comment">public static void sort(数组)：按照默认升序（从小到大）对数组的元素进行排序；</span></span><br><span class="line"><span class="comment">注意：</span></span><br><span class="line"><span class="comment">1.如果是数值，sort默认按照升序从小到大；</span></span><br><span class="line"><span class="comment">2.如果是字符串，sort默认按照字母升序；</span></span><br><span class="line"><span class="comment">3.如果是自定义类型，那么这个自定义的类需要有Comparable或者Comparator接口的支持；</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01Arrays</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] a = &#123;<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>&#125;;			<span class="comment">//创建数组a</span></span><br><span class="line">       	String b = Arrays.toString(a);	<span class="comment">//将a变成字符串并赋值给字符串b</span></span><br><span class="line">        System.out.println(b);			<span class="comment">//[10,20,30]</span></span><br><span class="line">        <span class="keyword">int</span>[] c = &#123;<span class="number">20</span>,<span class="number">40</span>,<span class="number">10</span>,<span class="number">30</span>&#125;;		<span class="comment">//创建数组c</span></span><br><span class="line">        Arrays.sort(c);					<span class="comment">//将数组c排序</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;c.length;i++)&#123;	<span class="comment">//遍历数组c</span></span><br><span class="line">            System.out.print(c[i]);		<span class="comment">//10203040</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Math类"><a href="#Math类" class="headerlink" title="Math类"></a>Math类</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p>java.lang.Math类是数学相关的工具类，里面提供了大量的静态方法，完成与数学运算有关的操作。</p>
+</blockquote>
+<h4 id="Math类的常用方法"><a href="#Math类的常用方法" class="headerlink" title="Math类的常用方法"></a>Math类的常用方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">public static double abs(double num):获取绝对值，有多种重载。</span></span><br><span class="line"><span class="comment">public static double ceil(double num):向上取整。</span></span><br><span class="line"><span class="comment">public static double floor(double num):向下取整。</span></span><br><span class="line"><span class="comment">public static long round(double num):四舍五入。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dome01Math</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">double</span> a = <span class="number">3.4</span>;</span><br><span class="line">        System.out.println(Math.abs(a));	<span class="comment">//3.4</span></span><br><span class="line">        System.out.println(Math.ceil(a));	<span class="comment">//4</span></span><br><span class="line">        System.out.println(Math.floor(a));	<span class="comment">//3</span></span><br><span class="line">        System.out.println(Math.round(a));	<span class="comment">//3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p>面向对象的三大特征：封装性，继承性，多态性；</p>
+<p>继承是多态的前提，如果没有继承，就没有多态；</p>
+</blockquote>
+<h4 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h4><blockquote>
+<p> 继承主要解决的问题史：<strong><u>共性抽取</u></strong></p>
+</blockquote>
+<blockquote>
+<p>父类可以叫基类、超类；</p>
+<p>子类可以叫派生类；</p>
+</blockquote>
+<h4 id="格式-1"><a href="#格式-1" class="headerlink" title="格式"></a>格式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">在继承关系中，“子类就是一个父类”。也就是说子类可以被当做父类看。</span></span><br><span class="line"><span class="comment">定义父类格式：</span></span><br><span class="line"><span class="comment">public class 父类名称&#123;</span></span><br><span class="line"><span class="comment">	//...</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">定义子类格式：</span></span><br><span class="line"><span class="comment">public class 子类名称 extends 父类名称&#123;</span></span><br><span class="line"><span class="comment">	//...</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">注意：在父子类的继承关系当中，如果成员变量重名，则创建子类对象访问有两种方式；</span></span><br><span class="line"><span class="comment">直接通过子类对象访问成员变量：</span></span><br><span class="line"><span class="comment">	等号左边是谁就优先用谁，没有则向上找父类的。</span></span><br><span class="line"><span class="comment">间接通过成员方法访问成员变量：</span></span><br><span class="line"><span class="comment">	该方法属于谁，就优先用谁，没有则向上找父类的。</span></span><br><span class="line"><span class="comment">	</span></span><br><span class="line"><span class="comment">区分父子类三种重名变量的方法：</span></span><br><span class="line"><span class="comment">局部变量：直接写成员变量名</span></span><br><span class="line"><span class="comment">子类中成员变量：this.成员变量名</span></span><br><span class="line"><span class="comment">父类中成员变量：super.成员变量名</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">在父子类的继承关系中，创建子类对象，访问成员方法规则：</span></span><br><span class="line"><span class="comment">	创建的对象是谁，就优先使用谁，如果没有则向上找父类的；</span></span><br><span class="line"><span class="comment">注意事项：</span></span><br><span class="line"><span class="comment">	无论是成员方法还是成员变量，如果没有都是向上找父类的，绝对不会向下找子类的；</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="重写（override"><a href="#重写（override" class="headerlink" title="重写（override)"></a>重写（override)</h4><h5 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h5><blockquote>
+<p>在继承关系中，方法名称一样，参数列表也一样；</p>
+</blockquote>
+<blockquote>
+<p>重写（override）：方法名称一样，参数列表也一样。覆盖，重写</p>
+<p>重载（overload）：方法名称一样，参数列表不一样。</p>
+</blockquote>
+<h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h5><h6 id="1-必须保证父子类之间方法的名称相同，参数列表也相同。"><a href="#1-必须保证父子类之间方法的名称相同，参数列表也相同。" class="headerlink" title="1.必须保证父子类之间方法的名称相同，参数列表也相同。"></a>1.必须保证父子类之间方法的名称相同，参数列表也相同。</h6><blockquote>
+<p>@Override：写在方法前面，用来检测方法是不是有效的正确覆盖重写。</p>
+</blockquote>
+<h6 id="2-子类方法的返回值必须小于等于父类方法的返回值范围。"><a href="#2-子类方法的返回值必须小于等于父类方法的返回值范围。" class="headerlink" title="2.子类方法的返回值必须小于等于父类方法的返回值范围。"></a>2.子类方法的返回值必须小于等于父类方法的返回值范围。</h6><blockquote>
+<p>java.lang.Object类是所有类的公共最高父类（祖宗类），java.lang.String就是Object的子类。</p>
+</blockquote>
+<h6 id="3-子类方法的权限必须大于等于父类权限修饰符。"><a href="#3-子类方法的权限必须大于等于父类权限修饰符。" class="headerlink" title="3.子类方法的权限必须大于等于父类权限修饰符。"></a>3.子类方法的权限必须大于等于父类权限修饰符。</h6><blockquote>
+<p>权限修饰符：public &gt; protected &gt; (default) &gt; private</p>
+</blockquote>
+<blockquote>
+<p>设计原则：</p>
+<p>对于已经投入使用的类，尽量不用进行修改，推荐定义一个新的类，来重复利用其中共性内容，并且添</p>
+<p>加改动新内容。</p>
+</blockquote>
+<h4 id="父子类勾走方法的访问特点"><a href="#父子类勾走方法的访问特点" class="headerlink" title="父子类勾走方法的访问特点"></a>父子类勾走方法的访问特点</h4><h6 id="1-子类构造方法当中有一个默认隐含的”super-”调用，所有一定时先调用父类构造方法后执行子类构造方法。"><a href="#1-子类构造方法当中有一个默认隐含的”super-”调用，所有一定时先调用父类构造方法后执行子类构造方法。" class="headerlink" title="1.子类构造方法当中有一个默认隐含的”super()”调用，所有一定时先调用父类构造方法后执行子类构造方法。"></a>1.子类构造方法当中有一个默认隐含的”super()”调用，所有一定时先调用父类构造方法后执行子类构造方法。</h6><h6 id="2-子类构造方法可以通过super关键字来调用父类重载构造。"><a href="#2-子类构造方法可以通过super关键字来调用父类重载构造。" class="headerlink" title="2.子类构造方法可以通过super关键字来调用父类重载构造。"></a>2.子类构造方法可以通过super关键字来调用父类重载构造。</h6><h6 id="3-super的父类构造调用，必须是子类构造方法的第一个语句，不能一个子类构造方法调用多此super构造。"><a href="#3-super的父类构造调用，必须是子类构造方法的第一个语句，不能一个子类构造方法调用多此super构造。" class="headerlink" title="3.super的父类构造调用，必须是子类构造方法的第一个语句，不能一个子类构造方法调用多此super构造。"></a>3.super的父类构造调用，必须是子类构造方法的第一个语句，不能一个子类构造方法调用多此super构造。</h6><blockquote>
+<p>总节：子类必须调用父类构造方法，不写则赠送super()，写了则用写的指定super调用，super只有一个，而且必须是第一个。</p>
+</blockquote>
+<h4 id="super关键字的用法"><a href="#super关键字的用法" class="headerlink" title="super关键字的用法"></a>super关键字的用法</h4><h6 id="1-在子类的成员方法中，访问父类的成员变量；"><a href="#1-在子类的成员方法中，访问父类的成员变量；" class="headerlink" title="1.在子类的成员方法中，访问父类的成员变量；"></a>1.在子类的成员方法中，访问父类的成员变量；</h6><h6 id="2-在子类的成员方法中，访问父类的成员方法；"><a href="#2-在子类的成员方法中，访问父类的成员方法；" class="headerlink" title="2.在子类的成员方法中，访问父类的成员方法；"></a>2.在子类的成员方法中，访问父类的成员方法；</h6><h6 id="3-在子类的构造方法中，访问父类的构造方法；"><a href="#3-在子类的构造方法中，访问父类的构造方法；" class="headerlink" title="3.在子类的构造方法中，访问父类的构造方法；"></a>3.在子类的构造方法中，访问父类的构造方法；</h6><h6 id="4-在子类的构造方法中，访问父类的成员方法；"><a href="#4-在子类的构造方法中，访问父类的成员方法；" class="headerlink" title="4.在子类的构造方法中，访问父类的成员方法；"></a>4.在子类的构造方法中，访问父类的成员方法；</h6><h4 id="this关键字的用法"><a href="#this关键字的用法" class="headerlink" title="this关键字的用法"></a>this关键字的用法</h4><h6 id="1-在本类的成员方法中，访问本类的成员变量；"><a href="#1-在本类的成员方法中，访问本类的成员变量；" class="headerlink" title="1.在本类的成员方法中，访问本类的成员变量；"></a>1.在本类的成员方法中，访问本类的成员变量；</h6><h6 id="2-在本类的成员方法中，访问本类的另一个成员方法；"><a href="#2-在本类的成员方法中，访问本类的另一个成员方法；" class="headerlink" title="2.在本类的成员方法中，访问本类的另一个成员方法；"></a>2.在本类的成员方法中，访问本类的另一个成员方法；</h6><h6 id="3-在本类的构造方法中，访问本类的另一个构造方法；"><a href="#3-在本类的构造方法中，访问本类的另一个构造方法；" class="headerlink" title="3.在本类的构造方法中，访问本类的另一个构造方法；"></a>3.在本类的构造方法中，访问本类的另一个构造方法；</h6><blockquote>
+<p>注意：A.this(…)调用的也必须是构造方法的第一个语句，唯一一个；</p>
+<p>B.super和this两种构造调用，不能同时使用；</p>
+</blockquote>
+<h4 id="super和this内存示意图"><a href="#super和this内存示意图" class="headerlink" title="super和this内存示意图"></a>super和this内存示意图</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="C:\Users\ZhanCheng\Desktop\IMG_2262.JPG" alt="IMG_2262" title="">
+                </div>
+                <div class="image-caption">IMG_2262</div>
+            </figure>
+
+<h4 id="Java继承的三个特性"><a href="#Java继承的三个特性" class="headerlink" title="Java继承的三个特性"></a>Java继承的三个特性</h4><h6 id="1-Java语言是单继承的，不能一个子类有两个父类。"><a href="#1-Java语言是单继承的，不能一个子类有两个父类。" class="headerlink" title="1.Java语言是单继承的，不能一个子类有两个父类。"></a>1.Java语言是单继承的，不能一个子类有两个父类。</h6><h6 id="2-Java语言是可以多级继承的，就是A继承B，B继承C；"><a href="#2-Java语言是可以多级继承的，就是A继承B，B继承C；" class="headerlink" title="2.Java语言是可以多级继承的，就是A继承B，B继承C；"></a>2.Java语言是可以多级继承的，就是A继承B，B继承C；</h6><h6 id="3-父类是可以被多个子类继承的，就是A继承B，C继承B；"><a href="#3-父类是可以被多个子类继承的，就是A继承B，C继承B；" class="headerlink" title="3.父类是可以被多个子类继承的，就是A继承B，C继承B；"></a>3.父类是可以被多个子类继承的，就是A继承B，C继承B；</h6>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-22T06:17:44.242Z" itemprop="dateUpdated">2020-07-22 06:17:44</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/IMG_1343.JPG" alt="CodePanda">
+            CodePanda
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/&title=《学习JavaEE第一天》 — CodePanda&pic=http://yoursite.com/img/IMG_1343.JPG" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/&title=《学习JavaEE第一天》 — CodePanda&source=coder" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/22/StudyJavaEE_day01/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习JavaEE第一天》 — CodePanda&url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/06/22/Hexo%20config%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hexo config配置文件说明</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/false" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>This blog is licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>CodePanda &copy; 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/&title=《学习JavaEE第一天》 — CodePanda&pic=http://yoursite.com/img/IMG_1343.JPG" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/&title=《学习JavaEE第一天》 — CodePanda&source=coder" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/22/StudyJavaEE_day01/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习JavaEE第一天》 — CodePanda&url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/22/StudyJavaEE_day01/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/07/22/StudyJavaEE_day01/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
